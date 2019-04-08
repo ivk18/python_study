@@ -2,8 +2,8 @@
 
 __author__ = 'Караваев Илья Викторович'
 
-list1 = ['пароль', 'файл', 2348, 'code', 'type', 'qwerty', 'message']   # 6
-list2 = ['type', 'qwerty', 'стиль', 234, 'mes']                         # 4
+list1 = ['пароль', 'файл', 2348, 'code', 'type', 'qwerty', 'message']
+list2 = ['type', 'qwerty', 'стиль', 234, 'mes']
 list3 = []
 
 print('Список 1:\n' + str(list1))
