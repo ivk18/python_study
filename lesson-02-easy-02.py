@@ -7,12 +7,15 @@ __author__ = 'Караваев Илья Викторович'
 
 list1 = ['пароль', 'файл', 2348, 'code', 'type', 'qwerty', 'message']
 list2 = ['type', 'qwerty', 'стиль', 234, 'mes']
-list3 = []
 
 print('Список 1:\n' + str(list1))
 print('\nСписок 2:\n' + str(list2))
 
-for l1 in list1:
-    if l1 not in list2: list3.append(l1)
+i = 0
+while i < len(list1):
+    if list1[i] in list2:
+        list1.remove(list1[i])
+        continue
+    else: i += 1
 
-print('\nСписок 1 без элементов списка 2:\n' + str(list3) + '\n')
+print('\nСписок 1 без элементов списка 2:\n' + str(list1) + '\n')
