@@ -26,5 +26,6 @@ for s in string:
     summa += ord(s)
     sym_list.append(ord(s))
 print('\n\nSum of codes = ' + str(summa))
-print('\nList of codes: ' + str(sym_list) + '\n')
+print('\nList of codes: ' + str(sym_list))
 
+print('\nThe same result with "MAP": ' + str(list(map(ord, string))) + '\n')
