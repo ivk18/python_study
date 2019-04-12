@@ -5,15 +5,18 @@
 
 __author__ = 'Караваев Илья Викторович'
 
-
-import math
-
 def fibonacci(n, m):
-    F = []
-    phi = (1 + math.sqrt(5)) / 2
-    for x in range(n, m + 1):
-        f = int(round((phi ** x) / math.sqrt(5), 0))
-        F.append(f)    
+    if n == 1: F = [1, 1]   # начальное значение результирующего ряда
+    elif n == 2: F = [1, ]  # если в качестве n будет указана единица, двойка
+    elif n > 2: F = []      # или большее число
+    f1 = 1; f2 = 1
+    for x in range(m - 2): # для вычисления члена ряда x нужно x-2 суммирований
+        fsum = f1 + f2
+        if x > n - 4: F.append(fsum)  # n-4 потому что два первых члена известны
+        f1 = f2
+        f2 = fsum
     return F
-    
-print(fibonacci(4, 13))
+
+print(fibonacci(1, 12))
+print(fibonacci(4, 6))
+print(fibonacci(48, 53))
