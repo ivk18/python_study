@@ -28,9 +28,9 @@ print('Решение с использованием функции "re":' + st
 
 import re
 
-pattern = '[A-Z]'
+pattern = '[A-Z]+'
 
-print(str([x for x in re.split(pattern, line) if x]) + str('\n'))
+print(str([x for x in re.split(pattern, line)]) + str('\n'))
 
 
 
