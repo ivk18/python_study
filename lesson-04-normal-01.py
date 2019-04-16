@@ -7,8 +7,6 @@
 
 __author__ = 'Караваев Илья Викторович'
 
-import re
-
 line = 'mtMmEZUOmcqWiryMQhhTxqKdSTKCYEJlEZCsGAMkgAYEOmHBSQsSUHKvSfbmxULaysmNO'\
        'GIPHpEMujalpPLNzRWXfwHQqwksrFeipEUlTLeclMwAoktKlfUBJHPsnawvjPhfgewVzK'\
        'TUfSYtBydXaVIpxWjNKgXANvIoumesCSSvjEGRJosUfuhRRDUuTQwLlJJJDdkVjfSAHqn'\
@@ -25,8 +23,25 @@ line = 'mtMmEZUOmcqWiryMQhhTxqKdSTKCYEJlEZCsGAMkgAYEOmHBSQsSUHKvSfbmxULaysmNO'\
        'XiUWgsKQrDOeZoNlZNRvHnLgCmysUeKnVJXPFIzvdDyleXylnKBfLCjLHntltignbQoiQ'\
        'zTYwZAiRwycdlHfyHNGmkNqSwXUrxGc'
 
-pattern = '[a-z0-9]'
-del_pattern = '[A-Z]'
 
-print(str([x for x in re.split(del_pattern, line) if x]) + str('\n'))
+print('Решение с использованием функции "re":' + str('\n'))
 
+import re
+
+pattern = '[A-Z]'
+
+print(str([x for x in re.split(pattern, line) if x]) + str('\n'))
+
+
+
+print('Решение без использования функции "re":' + str('\n'))
+
+new_line = ''
+
+for l in line:
+    if l != l.title():
+        new_line += l
+    else:
+        new_line += '.'
+        
+print(str([x for x in new_line.split(sep='.') if x]) + str('\n'))
