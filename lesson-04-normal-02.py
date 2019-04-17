@@ -39,15 +39,6 @@ for item in re.findall(pattern, line_2):
 print(str(result) + str('\n'))
 
 
+# print('Решение без использования функции "re":' + str('\n'))
 
-#print('Решение без использования функции "re":' + str('\n'))
-
-#new_line = ''
-
-#for l in line:
-#    if l != l.title():
-#        new_line += l
-#    else:
-#        new_line += '.'
-#        
-#print(str([x for x in new_line.split(sep='.') if x]) + str('\n'))
+# в процессе...
