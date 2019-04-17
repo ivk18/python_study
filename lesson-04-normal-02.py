@@ -38,7 +38,3 @@ for item in re.findall(pattern, line_2):
 
 print(str(result) + str('\n'))
 
-
-# print('Решение без использования функции "re":' + str('\n'))
-
-# в процессе...
