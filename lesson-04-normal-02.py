@@ -25,41 +25,56 @@ line_2 = 'mtMmEZUOmcqWiryMQhhTxqKdSTKCYEJlEZCsGAMkgAYEOmHBSQsSUHKvSfbmxULaysm'\
        'JFaXiUWgsKQrDOeZoNlZNRvHnLgCmysUeKnVJXPFIzvdDyleXylnKBfLCjLHntltignbQ'\
        'oiQzTYwZAiRwycdlHfyHNGmkNqSwXUrxGC'
 
-
+################################################
 print('Решение с использованием функции "re":' + str('\n'))
 
-import re
+def collectRe(s, before=2, after=2):
+    import re
+    result = []
+    pattern = '[a-z]{' + str(before) + '}[A-Z]+[A-Z]{' + str(after) + '}'
+    for item in re.findall(pattern, s):
+        result.append(item[before:-after])
+    return result
 
-result = []
-pattern = '[a-z]{2}[A-Z]+[A-Z]{2}'
+print(collectRe(line_2))
+print()
+print(collectRe(line_2,3,3))
+print()
+print(collectRe(line_2,1,5))
 
-for item in re.findall(pattern, line_2):
-    result.append(item[2:-2])
-
-print(str(result) + str('\n'))
-
-
-print('Решение без использования функции "re":' + str('\n'))
+################################################
+print(str('\n') + 'Решение без использования функции "re":' + str('\n'))
 
 def collect(s, before=2, after=2):
-    found = []
-    bigs = ''
-    i_small = 0
-    i_big = 0
+    found = []  # список для итогового результата
+    bigs = '' # строка для хранения найденной последовательности прописных букв
+    i_small = 0     # счетчик строчных букв
+    i_big = 0       # счетчик прописных букв
     while s:
-        if s[0] != s[0].title(): # строчная
+        if s[0] != s[0].title(): # если первая буква строки - строчная
+            # если последовательность прописных удовлетворяет условию after
             if len(bigs) >= after + 1:
-                found.append(bigs[:-after])
-            bigs = ''
-            i_small += 1
+                # добавляем найденную последовательность прописных к списку
+                found.append(bigs[:-after])     
+            i_small += 1    
+            # после добавления обнуляем счетчик прописных
             i_big = 0
-            s = s[1:]
-        elif s[0] == s[0].title(): # прописная
+            # и строку с найденными прописными буквами
+            bigs = ''  
+            s = s[1:]   # переходим к следующему символу
+        elif s[0] == s[0].title(): # если первая буква строки - прописная
+            # если уже найдена хотя бы одна прописная буква или 
+            # счетчик строчных удовлетворяет условию before
             if i_small >= before or i_big > 0:
-                bigs += s[0]
-                i_big += 1
-            i_small = 0
-            s = s[1:]
+                bigs += s[0]    # добавляем найденную прописную букву
+                i_big += 1      # и увеличиваем счетчик прописных
+            i_small = 0 # обнуляем счетчик строчных
+            s = s[1:]   # переходим к следующему символу
     return found
 
 print(collect(line_2))
+print()
+print(collect(line_2,3,3))
+print()
+print(collect(line_2,1,5))
+print()
