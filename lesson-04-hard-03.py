@@ -22,11 +22,10 @@ def coordGen():
         else:
             coord.append(x)
             quantity -= 1       
-    return coord
+    return coord    # список из 8 парных координат вида (x, y)
 
 # отображаем положение ферзей на "доске"
-def showBoard(items):
-    # print(str(items) + str('\n'*2))    # отобразить координаты для проверки
+def showBoard(items):   # принимает список из парных координат
     board = []
     [board.append([]) for i in range(8)]
     for i in range(8):
@@ -42,6 +41,8 @@ def showBoard(items):
 def checkAttack():
     global flag
     coord = coordGen()
+    # для проверки - одно из правильных решений:
+    # coord = [(0, 3), (1, 0), (2, 4), (3, 7), (4, 1), (5, 6), (6, 2), (7, 5)]
     showBoard(coord)
     start_item = coord[0]
     coord = coord[1:]
@@ -56,13 +57,12 @@ def checkAttack():
                 result.append(item)
         start_item = coord[0]
         coord = coord[1:]
-    result = set(result)
-    result = list(result)
+    result = list(set(result))    # избавляемся от повторяющихся ферзей
     if not result: flag = False
-    return result
+    return result   # список ферзей под "боем"
 
 flag = True   
-quantity = 0         
+quantity = 0    # счетчик количества перебранных случайных вариантов
 import os
             
 while flag:
