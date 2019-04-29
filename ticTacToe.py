@@ -57,7 +57,7 @@ def showBoard():
     # os.system('cls')      # очистить экран
     for i in range(3):
         for j in range(3):
-            print(game_field[i][j], end="  ")
+            print(game_field[j][i], end="  ")
         print('\n')
 
 def checkBingo(moves): # принимает список ходов
