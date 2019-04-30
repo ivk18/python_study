@@ -3,13 +3,15 @@
 from random import randint
 import os
 
+def cls():          # очистка экрана
+    os.system('cls')
 
 def compMove():
     """
     Ход компьютера.
     """    
     global turn
-    quantity = 1    # сделать 1 ход
+    quantity = 1    # нужно сделать 1 ход
     while quantity:
         coord_x = randint(0, 2)
         coord_y = randint(0, 2)
@@ -20,21 +22,21 @@ def compMove():
     print('Компьютер сделал ход на клетку ({}, {}):'.
             format(coord_x + 1, coord_y + 1))
     showBoard()
-    turn = 1    # флаг перехода хода к игроку
+    turn = 1        # флаг перехода хода к игроку
 
 def playerMove():
     """
     Ход игрока.
     """    
     global turn
+    print('Ход Игрока ("крестики"):')
     coord_x = int(input('Введите координату Х своего хода (от 1 до 3): ')) - 1
     coord_y = int(input('Введите координату Y своего хода (от 1 до 3): ')) - 1
-    if game_field[coord_x][coord_y] == '[ ]':  # если клетка пустая, то
-        game_field[coord_x][coord_y] = '[X]'  # сделать ход
-        player_moves.append((coord_x, coord_y))  # записать ход игрока
-        showBoard()
-        os.system('cls')      # очистить экран   
-        turn = 0     # флаг перехода хода к компьютеру
+    if game_field[coord_x][coord_y] == '[ ]':      # если клетка пустая, то
+        game_field[coord_x][coord_y] = '[X]'       # сделать ход
+        player_moves.append((coord_x, coord_y))    # записать ход игрока
+        cls()
+        turn = 0    # флаг перехода хода к компьютеру
     else:
         print(str('\n') + 'Эта клетка занята, выберите другую!' + str('\n'))
         playerMove()
@@ -43,12 +45,7 @@ def whoIsNext():
     """
     Кто ходит следующим?
     """
-    if turn == 0:        
-        # Ходит Компьютер ("нолики")
-        compMove()
-    else:        
-        print('Сейчас ходит Игрок ("крестики"):')
-        playerMove()
+    return compMove() if turn == 0 else playerMove()
 
 def showBoard():
     """
@@ -60,9 +57,10 @@ def showBoard():
             print(game_field[j][i], end="  ")
         print('\n')
 
-def checkBingo(moves): # принимает список ходов
+def checkBingo(moves):
     """
     Проверка - а не выиграл ли кто-нибудь?
+    Ф-я принимает список ходов.
     """
     win = ({(0,0), (1,0), (2,0)}, {(0,1), (1,1), (2,1)}, {(0,2), (1,2), (2,2)},
         {(0,0), (0,1), (0,2)}, {(1,0), (1,1), (1,2)}, {(2,0), (2,1), (2,2)},
@@ -75,24 +73,29 @@ def checkBingo(moves): # принимает список ходов
 game_field = [['[ ]', '[ ]', '[ ]'], ['[ ]', '[ ]', '[ ]'], 
                 ['[ ]', '[ ]', '[ ]']]   # инициализация пустого игрового поля
 turn = randint(0, 1)    # случайное определение очередности первого хода
-comp_moves = []     # координаты ходов компьютера
-player_moves = []   # координаты ходов игрока
+comp_moves = []         # координаты ходов компьютера
+player_moves = []       # координаты ходов игрока
 
 print('******* ИГРА КРЕСТИКИ - НОЛИКИ *******')
-showBoard()     # показать пустое игровое поле
+showBoard()             # показать пустое игровое поле
 input('Нажми любую клавишу чтобы начать игру ')
-os.system('cls')      # очистить экран
+cls()
 
-for i in range(9):   # основной цикл игры, максимум - 9 ходов 
+for i in range(9):      # основной цикл игры, максимум - 9 ходов 
     whoIsNext()   
     if len(comp_moves) >= 3 or len(player_moves) >= 3:
-        if checkBingo(comp_moves):      # проверка на выигрыш компьютера
-            os.system('cls')      # очистить экран
-            print('Компьютер победил!')
+        if checkBingo(comp_moves):       # проверка победы компьютера
+            cls()
+            print('Компьютер ("нолики") победил!')
             showBoard()
             break
-        if checkBingo(player_moves):    # проверка на выигрыш игрока
-            os.system('cls')      # очистить экран
-            print('Игрок победил!')
+        elif checkBingo(player_moves):   # проверка победы игрока
+            cls()
+            print('Игрок ("крестики") победил!')
             showBoard()
             break
+        elif (i == 8                     # проверка условия ничьи
+            and not checkBingo(comp_moves) and not checkBingo(player_moves)):
+            cls()
+            print('Ничья!')
+            showBoard()
