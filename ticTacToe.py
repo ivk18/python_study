@@ -1,5 +1,5 @@
 # Игра "крестики - нолики".
-# что-то поменял
+
 from random import randint
 import os
 
