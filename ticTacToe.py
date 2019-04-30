@@ -1,38 +1,67 @@
 # Игра "крестики - нолики".
 
-from random import randint
+import random
 import os
 
 def cls():          # очистка экрана
     os.system('cls')
 
-def checkCount():    # выводит порядковый номер хода
-    print('Ход № {}'.format(i+1))
-    
+def checkField(x, y):                   # проверяет, свободно ли поле (x, y)
+    if game_field[x][y] == '[ ]':       # если клетка пустая, то
+        return True
+
+def doCompMove(x, y):                   # выполняет ход компьютера на (x, y)
+    game_field[x][y] = '[O]'            # сделать ход
+    comp_moves.append((x, y))           # записать ход компьютера
+
 def compMove():
     """
-    Ход компьютера.
+    Ход компьютера. Случайные координаты поля.
     """
-    checkCount()
     global turn
     quantity = 1    # нужно сделать 1 ход
     while quantity:
-        coord_x = randint(0, 2)
-        coord_y = randint(0, 2)
-        if game_field[coord_x][coord_y] == '[ ]':  # если клетка пустая, то
-            game_field[coord_x][coord_y] = '[O]'   # сделать ход
-            comp_moves.append((coord_x, coord_y))  # записать ход компьютера
-            quantity -= 1    
+        coord_x = random.randint(0, 2)
+        coord_y = random.randint(0, 2)
+        if not checkField(coord_x, coord_y):
+            continue
+        else:
+            doCompMove(coord_x, coord_y)
+            quantity -= 1
     print('Компьютер сделал ход на клетку ({}, {}):'.
             format(coord_x + 1, coord_y + 1))
     showBoard()
     turn = 1        # флаг перехода хода к игроку
 
+def comp_next_pl():         #  сырая, потестить
+    """
+    Анализирует ходы противника и определяет координаты поля, 
+    которое нужно занять, чтобы не дать ему выиграть.
+    Работает, если число сделанных противником ходов >= 2.
+    Возвращает кортеж с координатами поля: (x, y), если есть.
+    """
+    temp = []           # времянка
+    next_moves = []     # список потенциальных будущих ходов
+    
+    for item in coords:
+        for i in range(len(player_moves)):
+            if player_moves[i] in list(item):
+                temp.append(tuple(set(player_moves)&(item)))
+    temp = set(temp)    # удаляем дубликаты
+    for item in coords:
+        for x in temp:        
+            if len(item - set(x)) == 1:
+                next_moves.append(item - set(x))  
+    try:
+        result = list(next_moves)
+    except:
+        result = False
+    return result
+    
 def playerMove():
     """
     Ход игрока.
     """    
-    checkCount()
     global turn
     print('Ход Игрока ("крестики"):')
     coord_x = int(input('Введите координату Х своего хода (от 1 до 3): ')) - 1
@@ -77,7 +106,7 @@ game_field = [['[ ]', '[ ]', '[ ]'], ['[ ]', '[ ]', '[ ]'],
 coords = ({(0,0), (1,0), (2,0)}, {(0,1), (1,1), (2,1)}, {(0,2), (1,2), (2,2)},
         {(0,0), (0,1), (0,2)}, {(1,0), (1,1), (1,2)}, {(2,0), (2,1), (2,2)},
         {(0,0), (1,1), (2,2)}, {(0,2), (1,1), (2,0)})
-turn = randint(0, 1)    # случайное определение очередности первого хода
+turn = random.randint(0, 1)    # случайное определение очередности первого хода
 comp_moves = []         # координаты ходов компьютера
 player_moves = []       # координаты ходов игрока
 
