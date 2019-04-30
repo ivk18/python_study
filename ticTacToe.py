@@ -83,7 +83,8 @@ showBoard()     # показать пустое игровое поле
 input('Нажми любую клавишу чтобы начать игру ')
 os.system('cls')      # очистить экран
 
-for i in range(9):   # основной цикл игры, максимум - 9 ходов    
+for i in range(9):   # основной цикл игры, максимум - 9 ходов 
+    whoIsNext()   
     if len(comp_moves) >= 3 or len(player_moves) >= 3:
         if checkBingo(comp_moves):      # проверка на выигрыш компьютера
             os.system('cls')      # очистить экран
@@ -95,4 +96,3 @@ for i in range(9):   # основной цикл игры, максимум - 9 
             print('Игрок победил!')
             showBoard()
             break
-    whoIsNext()
